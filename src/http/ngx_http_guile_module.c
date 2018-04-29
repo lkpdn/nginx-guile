@@ -8,11 +8,8 @@
 
 #include "../guile.h"
 
-
-typedef struct {
-    unsigned required_preaccess:1;
-    unsigned required_access:1;
-} ngx_http_guile_main_conf_t;
+#include "ngx_http_guile_common.h"
+#include "ngx_http_guile_balancer.h"
 
 
 static void * ngx_http_guile_create_main_conf(ngx_conf_t *cf);
@@ -37,6 +34,13 @@ static ngx_command_t  ngx_http_guile_commands[] = {
       NGX_HTTP_MAIN_CONF|NGX_HTTP_SRV_CONF|NGX_HTTP_LOC_CONF|NGX_HTTP_LIF_CONF
                         |NGX_CONF_TAKE1,
       ngx_http_guile_access_by_guile,
+      0,
+      0,
+      NULL },
+
+    { ngx_string("balancer_by_guile_file"),
+      NGX_HTTP_UPS_CONF|NGX_CONF_TAKE1,
+      ngx_http_guile_balancer_by_guile,
       0,
       0,
       NULL },
