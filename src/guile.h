@@ -8,9 +8,15 @@
 
 typedef struct {
     const char *procedure;
-    void *arg;
+    union {
+        struct {
+            size_t len;
+            u_char *buffer;
+        } raw;
+    };
     u_char result;
 } call_args_t;
+
 
 void * ngx_http_guile_spawn_thread(void *data);
 void * ngx_http_guile_call(void *data);

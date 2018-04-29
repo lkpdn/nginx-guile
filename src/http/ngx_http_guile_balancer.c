@@ -127,9 +127,10 @@ ngx_http_guile_balancer_get_peer(ngx_peer_connection_t *pc, void *data)
     buf = bp->request->connection->buffer;
 
     call_args_t args = {
-        .procedure = "balancer",
-        .arg       = buf->start,
-        .result    = 0,
+        .procedure  = "balancer",
+        .raw.len    = buf->end - buf->start + 1,
+        .raw.buffer = buf->start,
+        .result     = 0,
     };
 
     scm_with_guile(ngx_http_guile_call, &args);

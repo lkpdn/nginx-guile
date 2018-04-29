@@ -144,16 +144,14 @@ static ngx_int_t
 ngx_http_guile_preaccess_handler(ngx_http_request_t *r)
 {
     ngx_buf_t                   *buf;
-    ngx_http_guile_main_conf_t  *gmcf;
-
-    gmcf = ngx_http_get_module_main_conf(r, ngx_http_guile_module);
 
     buf = r->connection->buffer;
 
     call_args_t args = {
-        .procedure = "preaccess",
-        .arg       = buf->start,
-        .result    = 0,
+        .procedure  = "preaccess",
+        .raw.len    = buf->end - buf->start + 1,
+        .raw.buffer = buf->start,
+        .result     = 0,
     };
 
     scm_with_guile(ngx_http_guile_call, &args);
@@ -170,16 +168,14 @@ static ngx_int_t
 ngx_http_guile_access_handler(ngx_http_request_t *r)
 {
     ngx_buf_t                   *buf;
-    ngx_http_guile_main_conf_t  *gmcf;
-
-    gmcf = ngx_http_get_module_main_conf(r, ngx_http_guile_module);
 
     buf = r->connection->buffer;
 
     call_args_t args = {
-        .procedure = "access",
-        .arg       = buf->start,
-        .result    = 0,
+        .procedure  = "access",
+        .raw.len    = buf->end - buf->start + 1,
+        .raw.buffer = buf->start,
+        .result     = 0,
     };
 
     scm_with_guile(ngx_http_guile_call, &args);
