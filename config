@@ -5,8 +5,8 @@ ngx_module_srcs="\
     $ngx_addon_dir/src/guile.c \
     $ngx_addon_dir/src/http/ngx_http_guile_module.c \
     $ngx_addon_dir/src/http/ngx_http_guile_balancer.c"
-ngx_module_libs="$(guile-config link)"
-ngx_module_incs="$(guile-config compile)"
+ngx_module_libs="$(pkg-config --libs guile-2.2)"
+ngx_module_incs="$(pkg-config --cflags guile-2.2 | grep -oP '\-I\K[^ ]*')"
 
 . auto/module
 
