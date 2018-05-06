@@ -160,14 +160,8 @@ ngx_http_guile_balancer_free_peer(ngx_peer_connection_t *pc, void *data,
 {
     ngx_http_guile_balancer_peer_data_t  *bp = data;
 
-    ngx_log_debug1(NGX_LOG_DEBUG_HTTP, pc->log, 0,
-                   "guile balancer free peer, tries: %ui", pc->tries);
-
+    ngx_http_upstream_free_round_robin_peer(pc, data, state);
     bp->last_peer_state = (int) state;
 
-    if (pc->tries) {
-        pc->tries--;
-    }
-
-    return ;
+    return;
 }
